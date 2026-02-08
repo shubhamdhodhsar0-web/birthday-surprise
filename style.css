@@ -1,0 +1,934 @@
+/* ═══════════════════════════════════════════════════════════
+   RESET & GLOBAL STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background-color: #0a0a0a;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE MANAGEMENT
+   ═══════════════════════════════════════════════════════════ */
+
+.scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.scene.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 100;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE 1: MAGICAL BALLOON INTRO
+   ═══════════════════════════════════════════════════════════ */
+
+#scene-balloon {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    overflow: hidden;
+}
+
+/* Animated Stars */
+.stars-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Balloon Container */
+.balloon-container {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 150px;
+    height: 500px;
+    z-index: 20;
+}
+
+.balloon {
+    position: relative;
+    width: 100px;
+    height: 120px;
+    margin-bottom: 20px;
+}
+
+.balloon-body {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 35% 35%, #ff6b9d 0%, #ff1744 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    50% {
+        transform: scale(1);
+    }
+    75% {
+        transform: scale(1.08);
+    }
+}
+
+.balloon-string {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.balloon-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255, 23, 68, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glow-pulse 2s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Tap Button */
+.tap-button {
+    position: absolute;
+    bottom: 60px;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff1744, #ff6b9d);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 23, 68, 0.4);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInButton 1s ease-in-out 2s forwards;
+}
+
+.tap-button.fade-in-late {
+    opacity: 0;
+    animation: fadeInButton 1s ease-in-out 2s forwards;
+}
+
+@keyframes fadeInButton {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tap-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
+}
+
+.tap-button:active {
+    transform: scale(0.98);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE 2: BIRTHDAY CELEBRATION
+   ═══════════════════════════════════════════════════════════ */
+
+#scene-birthday {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.birthday-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+}
+
+/* Birthday Text Animation */
+.birthday-text-container {
+    z-index: 20;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.birthday-title {
+    font-size: clamp(32px, 8vw, 72px);
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+}
+
+.char {
+    display: inline-block;
+    animation: charBounce 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes charBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Fireworks */
+.fireworks-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+}
+
+.firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+}
+
+.firework-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* Floating Hearts Background */
+.floating-hearts-container,
+.floating-hearts-container-letter,
+.floating-hearts-container-final {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.6;
+    animation: float-up 6s ease-in infinite;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0.3);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Music Control */
+.music-control {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 50;
+}
+
+.music-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.music-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.music-btn.playing {
+    background: rgba(255, 23, 68, 0.4);
+    border-color: #ff1744;
+}
+
+/* Question Card */
+.question-card {
+    position: absolute;
+    bottom: 80px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 30;
+    max-width: 400px;
+    animation: slideUp 0.6s ease-out;
+}
+
+.question-card.hidden {
+    display: none;
+}
+
+.question-card p {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-yes,
+.btn-no {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 120px;
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, #ff1744, #ff6b9d);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 23, 68, 0.4);
+}
+
+.btn-yes:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 23, 68, 0.6);
+}
+
+.btn-no {
+    background: rgba(100, 100, 100, 0.3);
+    color: #333;
+    border: 2px solid #999;
+}
+
+.btn-no:hover {
+    background: rgba(100, 100, 100, 0.5);
+    transform: translateY(-3px);
+}
+
+/* Retry Message */
+.retry-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 22px;
+    color: #333;
+    z-index: 30;
+    animation: fadeInScale 0.6s ease-out;
+}
+
+.retry-message.hidden {
+    display: none;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE 3: MEMORIES PAGE
+   ═══════════════════════════════════════════════════════════ */
+
+#scene-memories {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 40px 20px;
+}
+
+.memories-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+}
+
+.memories-container {
+    z-index: 20;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+.memories-title {
+    font-size: clamp(28px, 7vw, 48px);
+    color: white;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.8s ease-out;
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Photo Gallery */
+.photo-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.photo-item {
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    animation: photoAppear 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.photo-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.photo-item:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.photo-item:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes photoAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.photo-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Next Button */
+.btn-next {
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff1744, #ff6b9d);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 25;
+    animation: fadeInButton 0.8s ease-out 0.5s forwards;
+    opacity: 0;
+}
+
+.btn-next:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.btn-next:active {
+    transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE 4: HEART INTERACTION
+   ═══════════════════════════════════════════════════════════ */
+
+#scene-heart {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    flex-direction: column;
+}
+
+.heart-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+}
+
+.heart-container {
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.heart-instruction {
+    font-size: 24px;
+    color: white;
+    opacity: 0.9;
+    animation: pulse-text 2s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.heart-icon {
+    font-size: 120px;
+    cursor: pointer;
+    animation: heart-beat 1.2s ease-in-out infinite;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+@keyframes heart-beat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+.heart-icon:hover {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
+
+.heart-icon:active {
+    animation: heartBurst 0.8s ease-out forwards;
+}
+
+@keyframes heartBurst {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE 5: LOVE LETTER
+   ═══════════════════════════════════════════════════════════ */
+
+#scene-letter {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    flex-direction: column;
+    padding: 40px 20px;
+    overflow-y: auto;
+}
+
+.letter-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.letter-container {
+    z-index: 20;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.letter-paper {
+    background: linear-gradient(135deg, #fef9e7 0%, #fff9e6 100%);
+    padding: 50px 40px;
+    border-radius: 10px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    position: relative;
+    animation: letterAppear 0.8s ease-out;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+@keyframes letterAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) rotateX(-20deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+.letter-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 19px,
+        rgba(0, 0, 0, 0.03) 19px,
+        rgba(0, 0, 0, 0.03) 20px
+    );
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.letter-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.letter-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    text-align: left;
+    font-family: 'Georgia', serif;
+    animation: typeWriter 3s steps(300, end);
+}
+
+@keyframes typeWriter {
+    0% {
+        max-width: 0;
+    }
+    100% {
+        max-width: 100%;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCENE 6: FINAL MESSAGE
+   ═══════════════════════════════════════════════════════════ */
+
+#scene-final {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.final-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+}
+
+.floating-stars-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.floating-star {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+    animation: float-star 8s ease-in infinite;
+}
+
+@keyframes float-star {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(150px) scale(1);
+        opacity: 0;
+    }
+}
+
+.final-message-container {
+    z-index: 20;
+    text-align: center;
+    animation: fadeInScale 1s ease-out;
+}
+
+.final-message {
+    color: white;
+    font-size: clamp(24px, 6vw, 48px);
+    line-height: 1.6;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.final-message p {
+    margin: 15px 0;
+}
+
+.signature {
+    margin-top: 40px;
+    font-size: 36px;
+    animation: signature-appear 1.5s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+@keyframes signature-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+    .birthday-title {
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .question-card {
+        padding: 30px 20px;
+        max-width: 90%;
+        bottom: 60px;
+    }
+
+    .question-card p {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .button-group {
+        gap: 10px;
+    }
+
+    .btn-yes,
+    .btn-no {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .heart-icon {
+        font-size: 80px;
+    }
+
+    .music-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .letter-paper {
+        padding: 30px 20px;
+        min-height: 350px;
+    }
+
+    .letter-text {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .final-message {
+        font-size: 20px;
+    }
+
+    .signature {
+        font-size: 28px;
+    }
+
+    .memories-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .photo-item {
+        height: 250px;
+    }
+
+    #scene-memories {
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .balloon-body {
+        width: 80px;
+        height: 90px;
+    }
+
+    .tap-button {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+
+    .birthday-title {
+        font-size: 22px;
+    }
+
+    .char {
+        display: inline-block;
+    }
+
+    .heart-icon {
+        font-size: 60px;
+    }
+
+    .final-message {
+        font-size: 18px;
+    }
+
+    .music-btn {
+        padding: 8px 14px;
+        font-size: 12px;
+        top: 20px;
+        right: 20px;
+    }
+}
